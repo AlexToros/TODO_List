@@ -2,29 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TestExersize.Models;
 using System.Web.Mvc;
 
 namespace TestExersize.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        TaskRepository repository = TaskRepository.RepositoryInstance;
+
+        public ViewResult Index()
         {
-            return View();
+            return View(repository.GetAllTasks());
         }
 
-        public ActionResult About()
+        public ActionResult Add(Task newTask)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            if (ModelState.IsValid)
+            {
+                repository.Add(newTask);
+                return RedirectToAction("Index");
+            }
+            else
+                return View("Index");
         }
 
-        public ActionResult Contact()
+        public ActionResult Update(Task task)
         {
-            ViewBag.Message = "Your contact page.";
+            if (ModelState.IsValid && repository.Update(task))
+                return RedirectToAction("Index");
+            else
+                return View("Index");
+        }
 
-            return View();
+        public ActionResult Remove(int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.Remove(Id);
+                return RedirectToAction("Index");
+            }
+            else
+                return View("Index");
         }
     }
 }
