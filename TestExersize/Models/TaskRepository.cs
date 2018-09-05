@@ -13,13 +13,15 @@ namespace TestExersize.Models
 
         private List<Task> tasks;
 
-        private TaskRepository() {
-            tasks = new List<Task>
+        private TaskRepository()
         {
-            new Task { TaskID = 1, Content = "Доделать во вторник, начатое в понедельник", IsDone = false},
-            new Task { TaskID = 2, Content = "Купить хлеб", IsDone = false},
-            new Task { TaskID = 3, Content = "Постричься", IsDone = true},
-        };
+            tasks = new List<Task>
+            {
+                new Task { TaskID = 1, Content = "Доделать во вторник, начатое в понедельник", IsDone = false},
+                new Task { TaskID = 2, Content = "Купить хлеб", IsDone = false},
+                new Task { TaskID = 3, Content = "Постричься", IsDone = true},
+            };
+            rep = this;
         }
 
         public IEnumerable<Task> GetAllTasks() => tasks;
