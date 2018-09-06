@@ -39,6 +39,13 @@ namespace TestExersize.Models
                 tasks.Remove(item);
         }
 
+        public void CloseTask(int Id)
+        {
+            Task item = Get(Id);
+            if (item != null)
+                item.IsDone = true;
+        }
+
         public bool Update(Task Task)
         {
             Task updatingTask = Get(Task.TaskID);

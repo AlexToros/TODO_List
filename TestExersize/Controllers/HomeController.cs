@@ -26,6 +26,22 @@ namespace TestExersize.Controllers
             else
                 return View("Index");
         }
+        
+        public ActionResult Editor()
+        {
+            return PartialView("Editor",new Task());
+        }
+
+        public ActionResult CloseTask(int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.CloseTask(Id);
+                return RedirectToAction("Index");
+            }
+            else
+                return View("Index");
+        }
 
         public ActionResult Update(Task task)
         {

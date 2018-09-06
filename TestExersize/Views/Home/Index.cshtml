@@ -5,8 +5,15 @@
     ViewBag.Title = "Список задач";
 }
 
+@section Scripts {
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+}
+
 @section Body {
+
     <div id="summary" class="section panel panel-primary">
-        @Html.Partial("Summary", Model)   
+        @Html.Partial("Summary", Model)
     </div>
+
 }
