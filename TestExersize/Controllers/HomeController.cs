@@ -13,7 +13,7 @@ namespace TestExersize.Controllers
 
         public ViewResult Index()
         {
-            return View(repository.GetAllTasks());
+            return View(repository.GetOpenTasks());
         }
 
         public ActionResult Add(Task newTask)

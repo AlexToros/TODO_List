@@ -26,6 +26,8 @@ namespace TestExersize.Models
 
         public IEnumerable<Task> GetAllTasks() => tasks;
 
+        public IEnumerable<Task> GetOpenTasks() => tasks.Where(t => !t.IsDone);
+
         public Task Get(int Id) => tasks.FirstOrDefault(x => x.TaskID == Id);
 
         public void Add(Task newTask) => tasks.Add(newTask);
