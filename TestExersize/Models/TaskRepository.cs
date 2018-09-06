@@ -30,7 +30,11 @@ namespace TestExersize.Models
 
         public Task Get(int Id) => tasks.FirstOrDefault(x => x.TaskID == Id);
 
-        public void Add(Task newTask) => tasks.Add(newTask);
+        public void Add(Task newTask)
+        {
+            newTask.TaskID = tasks.Count + 1;
+            tasks.Add(newTask);
+        }
 
         public void Remove(int Id)
         {
@@ -51,7 +55,6 @@ namespace TestExersize.Models
             Task updatingTask = Get(Task.TaskID);
             if (updatingTask != null)
             {
-                updatingTask.IsDone = Task.IsDone;
                 updatingTask.Content = Task.Content;
                 return true;
             }
