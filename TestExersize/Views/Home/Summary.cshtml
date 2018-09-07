@@ -1,15 +1,5 @@
 ﻿@model IEnumerable<TestExersize.Models.Task>
 <script>
-    $('#sus').click(function (e) {
-        $.ajax({
-            url: "~/App_Data/HtmlPage1",
-            type: "POST",
-            data: '1',
-            succsess: function (data) { alert(data) },
-            error: function (data) { alert(data) }
-        });
-
-    });
     function CloseTask(chb, ID) {
         chb.Enable = false
         $.ajax({
@@ -27,7 +17,7 @@
 </div>
 <div class="panel-heading">Мои задачи</div>
 <div class="panel-body">
-    <table class="table table-striped table-condensed">
+    <table class="table">
         <thead>
             <tr><th>Статус</th><th>Содержание</th><th></th></tr>
         </thead>

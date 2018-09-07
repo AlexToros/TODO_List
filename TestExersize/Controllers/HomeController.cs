@@ -33,6 +33,7 @@ namespace TestExersize.Controllers
             if (task != null)
             {
                 task.IsDone = true;
+                repository.Update(task);
                 return RedirectToAction("Index");
             }
             else

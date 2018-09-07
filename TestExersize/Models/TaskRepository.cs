@@ -11,43 +11,44 @@ namespace TestExersize.Models
 
         public static TaskRepository RepositoryInstance { get => rep ?? new TaskRepository(); }
 
-        private List<Task> tasks;
+        private EFDbContext context;
 
         private TaskRepository()
         {
-            tasks = new List<Task>
-            {
-                new Task { TaskID = 1, Content = "Доделать во вторник, начатое в понедельник", IsDone = false},
-                new Task { TaskID = 2, Content = "Купить хлеб", IsDone = false},
-                new Task { TaskID = 3, Content = "Постричься", IsDone = true},
-            };
+            context = new EFDbContext();
             rep = this;
         }
 
-        public IEnumerable<Task> GetAllTasks() => tasks;
+        public IEnumerable<Task> GetAllTasks() => context.Tasks;
 
-        public IEnumerable<Task> GetOpenTasks() => tasks.Where(t => !t.IsDone);
+        public IEnumerable<Task> GetOpenTasks() => context.Tasks.Where(t => !t.IsDone);
 
-        public Task Get(int Id) => tasks.FirstOrDefault(x => x.TaskID == Id);
+        public Task Get(int Id) => context.Tasks.FirstOrDefault(x => x.TaskID == Id);
 
         public void Add(Task newTask)
         {
-            newTask.TaskID = tasks.Count + 1;
-            tasks.Add(newTask);
+            context.Tasks.Add(newTask);
+            context.SaveChanges();
         }
 
         public void Remove(int Id)
         {
             Task item = Get(Id);
             if (item != null)
-                tasks.Remove(item);
+            {
+                context.Tasks.Remove(item);
+                context.SaveChanges();
+            }
         }
 
         public void CloseTask(int Id)
         {
             Task item = Get(Id);
             if (item != null)
+            {
                 item.IsDone = true;
+                context.SaveChanges();
+            }
         }
 
         public bool Update(Task Task)
@@ -55,7 +56,9 @@ namespace TestExersize.Models
             Task updatingTask = Get(Task.TaskID);
             if (updatingTask != null)
             {
+                updatingTask.IsDone = Task.IsDone;
                 updatingTask.Content = Task.Content;
+                context.SaveChanges();
                 return true;
             }
             else
