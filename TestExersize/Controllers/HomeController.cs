@@ -27,6 +27,18 @@ namespace TestExersize.Controllers
                 return View("Index");
         }
 
+        public ActionResult CloseTask(int Id)
+        {
+            Task task = repository.Get(Id);
+            if (task != null)
+            {
+                task.IsDone = true;
+                return RedirectToAction("Index");
+            }
+            else
+                return View("Index");
+        }
+
         public ActionResult GetEditor(int Id)
         {
             return PartialView("Edit", repository.Get(Id));

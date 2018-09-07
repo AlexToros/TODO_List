@@ -1,5 +1,28 @@
 ﻿@model IEnumerable<TestExersize.Models.Task>
+<script>
+    $('#sus').click(function (e) {
+        $.ajax({
+            url: "~/App_Data/HtmlPage1",
+            type: "POST",
+            data: '1',
+            succsess: function (data) { alert(data) },
+            error: function (data) { alert(data) }
+        });
 
+    });
+    function CloseTask(chb, ID) {
+        chb.Enable = false
+        $.ajax({
+            url: '/Home/CloseTask/' + ID,
+            type: "POST",
+            success: function (data) {
+                setTimeout(function () {
+                    window.location.reload(true);
+                }, 100);
+            }
+        });
+    };
+</script>
 <div id="modDialog" class="modal fade well-sm">
 </div>
 <div class="panel-heading">Мои задачи</div>
@@ -12,16 +35,16 @@
             @foreach (var task in Model)
             {
                 <tr>
-                    <td>@Html.CheckBoxFor(t => task.IsDone)</td>
+                    <td>@Html.CheckBoxFor(t => task.IsDone, new { id = "status",onchange = "CloseTask(this,"+task.TaskID+")"})</td>
                     <td>@task.Content</td>
                     <td>
                         @Html.ActionLink("Редактировать", "GetEditor",
-                                    new { Id = task.TaskID },
-                                    new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
+                             new { Id = task.TaskID },
+                             new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
 
                         @Html.ActionLink("Удалить", "Remove",
-                                    new { Id = task.TaskID },
-                                    new { @class = "btn btn-xs btn-primary" })
+                             new { Id = task.TaskID },
+                             new { @class = "btn btn-xs btn-primary" })
                     </td>
                 </tr>
             }
