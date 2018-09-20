@@ -19,9 +19,11 @@ namespace TestExersize.Models
 
         public IEnumerable<Task> GetAllTasks() => context.Tasks;
 
+        public IEnumerable<Task> GetUserOpenTasks(string UserId) => context.Tasks.Where(t => !t.IsDone && t.UserId == UserId);
+
         public IEnumerable<Task> GetOpenTasks() => context.Tasks.Where(t => !t.IsDone);
 
-        public Task Get(int Id) => context.Tasks.FirstOrDefault(x => x.TaskID == Id);
+        public Task Get(int Id) => context.Tasks.FirstOrDefault(x => x.Id == Id);
 
         public void Add(Task newTask)
         {
@@ -51,7 +53,7 @@ namespace TestExersize.Models
 
         public bool Update(Task Task)
         {
-            Task updatingTask = Get(Task.TaskID);
+            Task updatingTask = Get(Task.Id);
             if (updatingTask != null)
             {
                 updatingTask.IsDone = Task.IsDone;

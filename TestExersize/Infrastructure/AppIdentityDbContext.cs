@@ -10,7 +10,7 @@ namespace TestExersize.Infrastructure
 {
     public class AppIdentityDbContext : IdentityDbContext<AppUser>
     {
-        public AppIdentityDbContext() : base("name=EFDbContext") { }
+        public AppIdentityDbContext() : base("name=TestExersizeDB") { }
 
         static AppIdentityDbContext()
         {

@@ -1,0 +1,29 @@
+﻿@model TestExersize.Models.LoginModel
+
+@{
+     ViewBag.Title = "Авторизация";
+}
+<h2>Войти</h2>
+@section Scripts {}
+
+@section Body{
+
+    @Html.ValidationSummary()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken();
+        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+        <div class="form-group">
+            <label>Имя</label>
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Пароль</label>
+            @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+        </div>
+        <button type="submit" class="btn btn-primary">Войти</button>
+
+        @Html.ActionLink("Зарегистрироваться", "Create", null, new { @class = "btn btn-default" })
+    }
+}
+

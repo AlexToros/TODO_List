@@ -2,7 +2,8 @@
 {
     public class Task
     {
-        public int TaskID { get; set; }
+        public int Id { get; set; }
+        public string UserId { get; set; }
         public bool IsDone { get; set; }
         public string Content { get; set; }
     }

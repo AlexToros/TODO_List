@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace TestExersize.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         TaskRepository repository = TaskRepository.RepositoryInstance;

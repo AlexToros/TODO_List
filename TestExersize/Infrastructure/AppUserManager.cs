@@ -17,7 +17,7 @@ namespace TestExersize.Infrastructure
         public static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context)
         {
             AppIdentityDbContext db = context.Get<AppIdentityDbContext>();
-            AppUserManager manager = new AppUserManager(new UserStore<AppUser>());
+            AppUserManager manager = new AppUserManager(new UserStore<AppUser>(db));
             return manager;
         }
     }
