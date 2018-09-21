@@ -73,6 +73,13 @@ namespace TestExersize.Controllers
             }
             return View(model);
         }
+        
+        [AllowAnonymous]
+        public ActionResult Exit()
+        {
+            AuthManager.SignOut();
+            return RedirectToAction("Login");
+        }
 
         private IAuthenticationManager AuthManager { get => HttpContext.GetOwinContext().Authentication; }
 

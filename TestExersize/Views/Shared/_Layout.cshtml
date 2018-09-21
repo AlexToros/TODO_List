@@ -8,7 +8,13 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     @RenderSection("Scripts")
 </head>
-<body style="margin:10px">
+<body style="margin:-30px 10px 0px 10px">
+    <header class="page-header">
+        <div class="dl-horizontal " style="background-color:#428bca">
+            @Html.ActionLink("Список задач", "Index", "Home", null, new { @class = "btn btn-toolbar", style = "color:white; font-weight:550" })
+            @Html.ActionLink("Регистрация", "Create", "Account", null, new { @class = "btn btn-toolbar", style = "color:white; font-weight:550" })
+        </div>
+    </header>
     @RenderSection("Body")
 </body>
 </html>
