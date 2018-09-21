@@ -25,15 +25,15 @@
             @foreach (var task in Model)
             {
                 <tr>
-                    <td>@Html.CheckBoxFor(t => task.IsDone, new { id = "status",onchange = "CloseTask(this,"+task.TaskID+")"})</td>
+                    <td>@Html.CheckBoxFor(t => task.IsDone, new { id = "status",onchange = "CloseTask(this,"+task.Id + ")"})</td>
                     <td>@task.Content</td>
                     <td>
                         @Html.ActionLink("Редактировать", "GetEditor",
-                             new { Id = task.TaskID },
+                             new { Id = task.Id },
                              new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
 
                         @Html.ActionLink("Удалить", "Remove",
-                             new { Id = task.TaskID },
+                             new { Id = task.Id },
                              new { @class = "btn btn-xs btn-primary" })
                     </td>
                 </tr>

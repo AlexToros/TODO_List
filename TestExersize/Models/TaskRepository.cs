@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TestExersize.Infrastructure;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System.Web;
 
 namespace TestExersize.Models
 {
@@ -8,25 +12,26 @@ namespace TestExersize.Models
         private static TaskRepository rep;
 
         public static TaskRepository RepositoryInstance { get => rep ?? new TaskRepository(); }
-
-        private EFDbContext context;
+        
+        private AppIdentityDbContext context;
 
         private TaskRepository()
         {
-            context = new EFDbContext();
+            context = new AppIdentityDbContext();
             rep = this;
         }
 
         public IEnumerable<Task> GetAllTasks() => context.Tasks;
 
-        public IEnumerable<Task> GetUserOpenTasks(string UserId) => context.Tasks.Where(t => !t.IsDone && t.UserId == UserId);
+        public IEnumerable<Task> GetUserOpenTasks(string UserName) => context.Tasks.Where(t => !t.IsDone && t.User.UserName == UserName);
 
         public IEnumerable<Task> GetOpenTasks() => context.Tasks.Where(t => !t.IsDone);
 
         public Task Get(int Id) => context.Tasks.FirstOrDefault(x => x.Id == Id);
 
-        public void Add(Task newTask)
+        public void Add(Task newTask, string UserName)
         {
+            newTask.User = context.Users.Single(t => t.UserName == UserName);
             context.Tasks.Add(newTask);
             context.SaveChanges();
         }

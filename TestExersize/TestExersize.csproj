@@ -193,8 +193,8 @@
     </Compile>
     <Compile Include="Infrastructure\AppIdentityDbContext.cs" />
     <Compile Include="Infrastructure\AppUserManager.cs" />
+    <Compile Include="Infrastructure\IdentityHelpers.cs" />
     <Compile Include="Models\AppUserModels.cs" />
-    <Compile Include="Models\EFDbContext.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\NewUserModel.cs" />
     <Compile Include="Models\Task.cs" />

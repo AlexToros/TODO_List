@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using TestExersize.Models;
 using System.Web.Mvc;
+using TestExersize.Infrastructure;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace TestExersize.Controllers
 {
@@ -14,14 +16,16 @@ namespace TestExersize.Controllers
 
         public ViewResult Index()
         {
-            return View(repository.GetOpenTasks());
+            return View(repository.GetUserOpenTasks(User.Identity.Name));
         }
 
-        public ActionResult Add(Task newTask)
+        public async System.Threading.Tasks.Task<ActionResult> Add(Task newTask)
         {
             if (ModelState.IsValid)
             {
-                repository.Add(newTask);
+                AppUser user = await UserManager.FindByNameAsync(User.Identity.Name);
+                newTask.User = user;
+                repository.Add(newTask, User.Identity.Name);
                 return RedirectToAction("Index");
             }
             else
@@ -69,5 +73,7 @@ namespace TestExersize.Controllers
             else
                 return View("Index");
         }
+
+        private AppUserManager UserManager { get => HttpContext.GetOwinContext().GetUserManager<AppUserManager>(); }
     }
 }

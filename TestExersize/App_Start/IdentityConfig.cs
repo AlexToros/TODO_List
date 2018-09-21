@@ -12,12 +12,11 @@ namespace TestExersize
         {
             app.CreatePerOwinContext(AppIdentityDbContext.Create);
             app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
-            app.CreatePerOwinContext<AppRoleManager>(AppRoleManager.Create);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Index"),
+                LoginPath = new PathString("/Account/Login"),
             });
         }
     }

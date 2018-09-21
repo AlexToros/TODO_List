@@ -46,12 +46,14 @@ namespace TestExersize.Controllers
             return View(details);
         }
 
+        [AllowAnonymous]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> Create(NewUserModel model)
         {
             if (ModelState.IsValid)
