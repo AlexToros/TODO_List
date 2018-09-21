@@ -12,7 +12,7 @@ namespace TestExersize.Infrastructure
     {
         public DbSet<Task> Tasks { get; set; }
 
-        public AppIdentityDbContext() : base("name=TestExersizeDB") { }
+        public AppIdentityDbContext() : base("name=UsersTaskDB") { }
 
         static AppIdentityDbContext()
         {
