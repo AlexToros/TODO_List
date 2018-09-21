@@ -44,6 +44,17 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="UsersTaskDB-развертывание" Order="1">
+          <Destination Path="Data Source=UsersTaskDB.mssql.somee.com%3bInitial Catalog=UsersTaskDB%3bUser ID=AlexToros_SQLLogin_1%3bPassword=kl6pskm6ad" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=UsersTaskDB.mssql.somee.com%3bInitial Catalog=UsersTaskDB%3bPersist Security Info=False%3bUser ID=AlexToros_SQLLogin_1%3bPassword=kl6pskm6ad%3bPacket Size=4096%3bWorkstation ID=UsersTaskDB.mssql.somee.com" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Release\AutoScripts\UsersTaskDB-развертывание_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -202,7 +213,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\TaskDB.sqlite" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -246,7 +256,9 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
