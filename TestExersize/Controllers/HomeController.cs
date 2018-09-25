@@ -29,7 +29,7 @@ namespace TestExersize.Controllers
                 return RedirectToAction("Index");
             }
             else
-                return View("Index");
+                return null;
         }
 
         public ActionResult CloseTask(int Id)

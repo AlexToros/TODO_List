@@ -1,10 +1,13 @@
-﻿namespace TestExersize.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TestExersize.Models
 {
     public class Task
     {
         public int Id { get; set; }
         public AppUser User { get; set; }
         public bool IsDone { get; set; }
+        [Required]
         public string Content { get; set; }
     }
 }

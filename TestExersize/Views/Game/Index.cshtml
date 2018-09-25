@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@section Scripts {
+
+}
+@section Body{
+<div class="panel">
+    <div class="container text-center">
+        <canvas id="myCanvas" width="480" height="320" onmousemove="mouseMoveHandler(this)"></canvas>
+    </div>
+</div>
+
+    <table>
+        <tr>
+            <td><button class="btn btn-primary" onclick="NewGame()">Новая игра</button></td>
+        </tr>
+    </table>
+
+    <script>
+        var rightPressed = false;
+        var leftPressed = false;
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var ballRadius = 10;
+        var paddleHeight = 10;
+        var paddleWidth = 75;
+        var paddleX = (canvas.width - paddleWidth) / 2;
+        var i = 0;
+        var x = canvas.width / 2;
+        var y = canvas.height - 30;
+        var dx = 2;
+        var dy = -2;
+        var score = 0;
+        var angle = Math.PI / 2;
+
+        var brickRowCount = 3;
+        var brickColumnCount = 5;
+        var brickWidth = 75;
+        var brickHeight = 20;
+        var brickPadding = 10;
+        var brickOffsetTop = 30;
+        var brickOffsetLeft = 30;
+        var bricks = [];
+
+        var GameIsOver = true;
+
+        refreshField();
+       
+        function refreshField() {
+            for (var c = 0; c < brickColumnCount; c++) {
+                bricks[c] = [];
+                for (var r = 0; r < brickRowCount; r++) {
+                    bricks[c][r] = { x: c * (brickWidth + brickPadding) + brickOffsetLeft, y: r * (brickHeight + brickPadding) + brickOffsetTop, active: true };
+                }
+            }
+            score = 0;
+            x = canvas.width / 2;
+            y = canvas.height - 30;
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBricks();
+            drawBall();
+            drawPaddle();
+            drawScore();
+            calculateCollisions();
+            if (!GameIsOver) {
+                x += dx;
+                y += dy;
+            }
+            requestAnimationFrame(draw);
+        }
+
+        function NewGame() {
+            refreshField();
+            GameIsOver = false;
+        }
+
+        function calculateCollisions() {
+            for (var c = 0; c < brickColumnCount; c++) {
+                for (var r = 0; r < brickRowCount; r++) {
+                    var b = bricks[c][r];
+                    if (b.active) {
+                        b.active = !isIntersect(b);
+                    }
+                }
+            }
+
+            if (x + dx < ballRadius || x + dx > canvas.width - ballRadius) dx = -dx;
+
+            if (y + dy < ballRadius) {
+                dy = -dy;
+            }
+            var temp = 0;
+            if (x > paddleX && x < paddleX + paddleWidth) temp = ballRadius - 2;
+            if (y + dy > canvas.height - ballRadius - temp) {
+                if (x > paddleX && x < paddleX + paddleWidth) {
+                    if (dx < 0) {
+                        pX = (paddleX + paddleWidth - x) / paddleWidth
+                        dangle = pX - 0.5;
+                        angle = Math.PI / 2 - dangle;
+                        dx1 = dx * Math.cos(angle) - dy * Math.sin(angle);
+                        dy1 = dx * Math.sin(angle) + dy * Math.cos(angle);
+                    } else {
+                        dx1 = dx * Math.cos(angle) + dy * Math.sin(angle);
+                        dy1 = -dx * Math.sin(angle) + dy * Math.cos(angle);
+                    }
+                    dx = dx1;
+                    dy = dy1;
+                }
+                else {
+                    x = canvas.width / 2;
+                    y = canvas.height - 30;
+                    GameIsOver = true;
+                    alert("Конец игры");
+                    document.location.reload();
+                }
+            }
+        }
+
+        function isIntersect(brick) {
+            if (x > brick.x && x < brick.x + brickWidth && (brick.y < y + ballRadius && brick.y + brickHeight > y + ballRadius
+                || brick.y < y - ballRadius && brick.y + brickHeight > y - ballRadius)) {
+                dy = -dy;
+                score++;
+                if (score == brickColumnCount * brickRowCount) GameIsOver = true;
+                return true;
+            }
+        }
+
+        function drawPaddle() {
+            ctx.beginPath();
+            if (rightPressed && paddleX < canvas.width - paddleWidth) {
+                paddleX += 4;
+            }
+            else if (leftPressed && paddleX > 0) {
+                paddleX -= 4;
+            }
+            ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawBricks() {
+            for (var c = 0; c < brickColumnCount; c++) {
+                for (var r = 0; r < brickRowCount; r++) {
+                    if (bricks[c][r].active) {
+                        ctx.beginPath();
+                        ctx.rect(bricks[c][r].x, bricks[c][r].y, brickWidth, brickHeight);
+                        ctx.fillStyle = "#0095DD";
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+                }
+            }
+        }
+
+        function drawScore() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#0095DD";
+            ctx.fillText("Score: " + score, 8, 20);
+        }
+
+        function keyDownHandler(e) {
+            if (e.keyCode == 39) {
+                rightPressed = true;
+            }
+            else if (e.keyCode == 37) {
+                leftPressed = true;
+            }
+        }
+
+        function keyUpHandler(e) {
+            if (e.keyCode == 39) {
+                rightPressed = false;
+            }
+            else if (e.keyCode == 37) {
+                leftPressed = false;
+            }
+        }
+
+        function mouseMoveHandler(e) {
+            var relativeX = e.clientX - canvas.offsetLeft;
+            if (relativeX > 0 && relativeX < canvas.width) {
+                paddleX = relativeX - paddleWidth / 2;
+            }
+        }
+
+        document.getElementById("myCanvas").addEventListener("mousemove", mouseMoveHandler, false);
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+        draw();
+    </script>
+}
+

@@ -29,7 +29,7 @@ namespace TestExersize.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel details, string returnUrl)
         {
-            AppUser user = await UserManager.FindAsync(details.Name, details.Password);
+            AppUser user = await UserManager.FindAsync(details.Email, details.Password);
 
             if (user == null)
                 ModelState.AddModelError("", "Некорректное имя или пароль.");
@@ -58,7 +58,7 @@ namespace TestExersize.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser newUser = new AppUser { UserName = model.Name, Email = model.Email};
+                AppUser newUser = new AppUser { FirstName = model.Name, Email = model.Email, UserName = model.Email };
                 IdentityResult result = await UserManager.CreateAsync(newUser, model.Password);
 
                 if (result.Succeeded)
@@ -75,10 +75,10 @@ namespace TestExersize.Controllers
         }
         
         [AllowAnonymous]
-        public ActionResult Exit()
+        public ActionResult Exit(string F)
         {
             AuthManager.SignOut();
-            return RedirectToAction("Login");
+            return RedirectToAction("Login", "Account");
         }
 
         private IAuthenticationManager AuthManager { get => HttpContext.GetOwinContext().Authentication; }
