@@ -1,5 +1,5 @@
 ﻿@model TestExersize.Models.Task
-<div class="modal-content">
+<div class="modal-content" id="dialogContent">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLable">Добавление задачи</h4>
@@ -9,15 +9,30 @@
         {
             <div class="form-group">
                 <label>Текст задачи</label>
-                @Html.TextBoxFor(m => m.Content, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Content, new { @class = "form-control" })                
+                @Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger" })
             </div>
             <div class="form-group hidden">
                 @Html.TextBoxFor(m => m.Id, new { @class = "form-control" })
             </div>
-            <button type="submit" class="btn btn-primary">Сохранить</button>
-
-            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Отмена</button>
+            
         }
+        <button class="btn btn-primary" onclick="Save()">Сохранить</button>
 
+        <button class="btn btn-primary" data-dismiss="modal" aria-label="Close" onclick="Cancel()">Отмена</button>
     </div>
 </div>
+<script>
+    function Save() {
+        $.ajax({
+            url: "@Url.Action("Update", "Home")",
+            type: "POST",
+            data: $('form').serialize(),
+            datatype: "json",
+            success: function (result) {
+                $("#dialogContent").html(result);
+            }
+        });
+    }
+    function Cancel() { $(this).remove() }
+</script>

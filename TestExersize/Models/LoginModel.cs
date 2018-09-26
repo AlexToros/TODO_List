@@ -8,9 +8,9 @@ namespace TestExersize.Models
 {
     public class LoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "Введите Email!")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Введите пароль!")]
         public string Password { get; set; }
     }
 }

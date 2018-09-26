@@ -26,10 +26,11 @@ namespace TestExersize.Controllers
                 AppUser user = await UserManager.FindByNameAsync(User.Identity.Name);
                 newTask.User = user;
                 repository.Add(newTask, User.Identity.Name);
-                return RedirectToAction("Index");
+                ViewBag.Message = "Задача добавлена!";
+                return PartialView("Success");
             }
             else
-                return null;
+                return PartialView(newTask);
         }
 
         public ActionResult CloseTask(int Id)
@@ -54,13 +55,16 @@ namespace TestExersize.Controllers
         {
             return PartialView("Add",new Task());
         }
-        
+
         public ActionResult Update(Task task)
         {
             if (ModelState.IsValid && repository.Update(task))
-                return RedirectToAction("Index");
+            {
+                ViewBag.Message = "Задача отредактирована!";
+                return PartialView("Success");
+            }
             else
-                return View("Index");
+                return PartialView("Edit", task);
         }
 
         public ActionResult Remove(int Id)

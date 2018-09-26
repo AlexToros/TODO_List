@@ -29,19 +29,24 @@ namespace TestExersize.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel details, string returnUrl)
         {
-            AppUser user = await UserManager.FindAsync(details.Email, details.Password);
+            if (ModelState.IsValid)
+            {
+                AppUser user = await UserManager.FindAsync(details.Email, details.Password);
 
-            if (user == null)
-                ModelState.AddModelError("", "Некорректное имя или пароль.");
-            else {
-                ClaimsIdentity ident = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-
-                AuthManager.SignOut();
-                AuthManager.SignIn(new AuthenticationProperties
+                if (user == null)
+                    ModelState.AddModelError("", "Некорректное имя или пароль.");
+                else
                 {
-                    IsPersistent = false
-                }, ident);
-                return RedirectToAction("Index","Home");
+                    ClaimsIdentity ident = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+
+                    AuthManager.SignOut();
+                    AuthManager.SignIn(new AuthenticationProperties
+                    {
+                        IsPersistent = false
+                    }, ident);
+                    return RedirectToAction("Index", "Home");
+                }
+                
             }
             return View(details);
         }

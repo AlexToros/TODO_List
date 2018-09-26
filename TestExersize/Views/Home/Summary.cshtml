@@ -13,7 +13,8 @@
         });
     };
 </script>
-<div id="modDialog" class="modal fade well-sm">
+
+<div id="modDialog" class="modal">
 </div>
 <div class="panel-heading">Мои задачи</div>
 <div class="panel-body">
@@ -25,22 +26,22 @@
             @foreach (var task in Model)
             {
                 <tr>
-                    <td>@Html.CheckBoxFor(t => task.IsDone, new { id = "status",onchange = "CloseTask(this,"+task.Id + ")"})</td>
+                    <td>@Html.CheckBoxFor(t => task.IsDone, new { id = "status", onchange = "CloseTask(this," + task.Id + ")" })</td>
                     <td>@task.Content</td>
                     <td>
                         @Html.ActionLink("Редактировать", "GetEditor",
-                             new { Id = task.Id },
-                             new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
+                                       new { Id = task.Id },
+                                       new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
 
                         @Html.ActionLink("Удалить", "Remove",
-                             new { Id = task.Id },
-                             new { @class = "btn btn-xs btn-primary" })
+                                       new { Id = task.Id },
+                                       new { @class = "btn btn-xs btn-primary" })
                     </td>
                 </tr>
             }
         </tbody>
     </table>
     @Html.ActionLink("Добавить", "GetAdder",
-        null,
-        new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
+                null,
+                new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
 </div>

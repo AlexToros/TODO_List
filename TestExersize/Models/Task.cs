@@ -7,7 +7,8 @@ namespace TestExersize.Models
         public int Id { get; set; }
         public AppUser User { get; set; }
         public bool IsDone { get; set; }
-        [Required]
+        [Display(Name = "Содержание")]
+        [Required(ErrorMessage = "Необходимо ввести текст задачи.")]
         public string Content { get; set; }
     }
 }

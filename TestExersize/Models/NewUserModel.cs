@@ -8,11 +8,11 @@ namespace TestExersize.Models
 {
     public class NewUserModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необходимо ввести имя.")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Необходимо ввести Email.")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Необходимо ввести пароль.")]
         public string Password { get; set; }
     }
 }
