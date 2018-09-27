@@ -9,9 +9,9 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     @RenderSection("Scripts")
 </head>
-<body style="margin:-30px 10px 0px 10px">
+<body>
     <header class="page-header">
-        <div class="dl-horizontal " style="background-color:#428bca">
+        <div class="dl-horizontal">
             @Html.ActionLink("Список задач", "Index", "Home", null, new { @class = "btn btn-toolbar", style = "color:white; font-weight:550" })
             @Html.ActionLink("Регистрация", "Create", "Account", null, new { @class = "btn btn-toolbar", style = "color:white; font-weight:550" })
             @Html.ActionLink("Выйти", "Exit", "Account", null, new { @class = "btn btn-toolbar", style = "color:white; font-weight:550" })

@@ -16,32 +16,48 @@
 
 <div id="modDialog" class="modal col-lg-offset-4 col-lg-4">
 </div>
-<div class="panel-heading">Мои задачи</div>
-<div class="panel-body">
-    <table class="table">
-        <thead>
-            <tr><th>Статус</th><th>Содержание</th><th></th></tr>
-        </thead>
-        <tbody>
-            @foreach (var task in Model)
+    <div class="panel-heading">Мои задачи</div>
+    <div class="panel-body">
+        <table class="table">
+            @if (Model.Count() == 0)
             {
-                <tr>
-                    <td>@Html.CheckBoxFor(t => task.IsDone, new { id = "status", onchange = "CloseTask(this," + task.Id + ")" })</td>
-                    <td>@task.Content</td>
-                    <td>
-                        @Html.ActionLink("Редактировать", "GetEditor",
-                                       new { Id = task.Id },
-                                       new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
-
-                        @Html.ActionLink("Удалить", "Remove",
-                                       new { Id = task.Id },
-                                       new { @class = "btn btn-xs btn-primary" })
-                    </td>
-                </tr>
+                <tbody><tr><td class="text-center">На данный момент у Вас нет новых задач</td></tr></tbody>
             }
-        </tbody>
-    </table>
-    @Html.ActionLink("Добавить", "GetAdder",
-                null,
-                new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
-</div>
+            else
+            {
+            <thead>
+                <tr><th>Статус</th><th>Содержание</th><th></th></tr>
+            </thead>
+            <tbody>
+                @foreach (var task in Model)
+                {
+                    <tr>
+                        <td class="col-lg-1">@Html.CheckBoxFor(t => task.IsDone, new { id = "status", onchange = "CloseTask(this," + task.Id + ")" })</td>
+                        <td class="col-lg-8">@task.Content</td>
+                        <td class="col-lg-3">
+                            @Html.ActionLink("Редактировать", "GetEditor",
+                                             new { Id = task.Id },
+                                             new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
+
+                            @Html.ActionLink("Удалить", "Remove",
+                                             new { Id = task.Id },
+                                             new { @class = "btn btn-xs btn-primary" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            }
+        </table>
+        @Html.ActionLink("Добавить", "GetAdder",
+                        null,
+                        new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
+        <button class="btn btn-primary" onclick="Save()">Notify</button>
+    </div>
+<script>
+     function Save() {
+         $('body').notify({
+             message: 'Hello World',
+             type: 'danger'
+         });
+    }
+</script>

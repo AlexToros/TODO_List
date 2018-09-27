@@ -7,26 +7,30 @@
 @section Scripts {}
 
 @section Body{
+<div class="container">
     @using (Html.BeginForm())
     {
-        @Html.ValidationSummary()
-<div class="form-horizontal">
-    <h3>Войти</h3>
-    <hr />
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
-    <div class="form-group">
-        <label class="control-label col-md-2">Email</label>
-        <div class="col-md-10">
-            @Html.TextBoxFor(x => x.Email, new { @class = "form-control col-md-10" })
+        
+    <div class="form-horizontal">
+        <h3>Войти</h3>
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+        <div class="form-group">
+            <label class="control-label col-md-2">Email</label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control col-md-10" })
+            </div>
         </div>
-    </div>
         <div class="form-group col-m-20">
             <label class="control-label col-md-2">Пароль</label>
-            <div class="col-md-10">
+            <div class="col-md-4">
                 @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
             </div>
         </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                @Html.ValidationSummary()
+            </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button type="submit" class="btn btn-primary">
@@ -36,8 +40,9 @@
             </div>
         </div>
 
-    
-</div>
+    </div>
+
     }
+</div>
 }
 

@@ -2,7 +2,7 @@
 <div class="modal-content" id="dialogContent">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLable">Добавление задачи</h4>
+        <h4 class="modal-title" id="myModalLable">Новая задача</h4>
     </div>
     <div class="modal-body">
         @using (Html.BeginForm())
@@ -22,6 +22,7 @@
 </div>
 
 <script>
+   
     function Save() {
         $.ajax({
             url: "@Url.Action("Add", "Home")",
@@ -29,6 +30,7 @@
             data: $('form').serialize(),
             datatype: "json",
             success: function (result) {
+                
                 $("#dialogContent").html(result);
             }
         });
