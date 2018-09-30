@@ -13,18 +13,18 @@
         });
     };
 </script>
-
+    
 <div id="modDialog" class="modal col-lg-offset-4 col-lg-4">
 </div>
-    <div class="panel-heading">Мои задачи</div>
-    <div class="panel-body">
-        <table class="table">
-            @if (Model.Count() == 0)
-            {
-                <tbody><tr><td class="text-center">На данный момент у Вас нет новых задач</td></tr></tbody>
-            }
-            else
-            {
+<div class="panel-heading">Мои задачи</div>
+<div class="panel-body">
+    <table class="table">
+        @if (Model.Count() == 0)
+        {
+            <tbody><tr><td class="text-center">На данный момент у Вас нет новых задач</td></tr></tbody>
+        }
+        else
+        {
             <thead>
                 <tr><th>Статус</th><th>Содержание</th><th></th></tr>
             </thead>
@@ -36,28 +36,26 @@
                         <td class="col-lg-8">@task.Content</td>
                         <td class="col-lg-3">
                             @Html.ActionLink("Редактировать", "GetEditor",
-                                             new { Id = task.Id },
-                                             new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
+                                                            new { Id = task.Id },
+                                                            new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
 
                             @Html.ActionLink("Удалить", "Remove",
-                                             new { Id = task.Id },
-                                             new { @class = "btn btn-xs btn-primary" })
+                                                            new { Id = task.Id },
+                                                            new { @class = "btn btn-xs btn-primary" })
                         </td>
                     </tr>
                 }
             </tbody>
-            }
-        </table>
-        @Html.ActionLink("Добавить", "GetAdder",
-                        null,
-                        new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
-        <button class="btn btn-primary" onclick="Save()">Notify</button>
-    </div>
+        }
+    </table>
+    @Html.ActionLink("Добавить", "GetAdder",
+                                 null,
+                                 new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
+</div>
+
 <script>
-     function Save() {
-         $('body').notify({
-             message: 'Hello World',
-             type: 'danger'
-         });
-    }
-</script>
+    $(document).ready(function () {
+        var text = decodeURI( window.location.search.substr(1).split('=')[1])
+            Notify.generate(text, 1);
+        })
+    </script>

@@ -1,8 +1,7 @@
-﻿<h2 class="text-center text-success">@ViewBag.Message</h2>
-<script>
+﻿<script>
     $(document).ready(function () {
-        setTimeout(function() {
-            window.location.href = "@Url.Action("Index", "Home")";
-        }, 500);
+        setTimeout(function () {
+            window.location.href = "@Url.Action("Index", "Home", new { m_c = ViewBag.MessageCode })";
+        }, 0);
     })
 </script>

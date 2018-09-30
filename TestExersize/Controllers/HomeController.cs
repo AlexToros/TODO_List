@@ -26,7 +26,7 @@ namespace TestExersize.Controllers
                 AppUser user = await UserManager.FindByNameAsync(User.Identity.Name);
                 newTask.User = user;
                 repository.Add(newTask, User.Identity.Name);
-                ViewBag.Message = "Задача добавлена!";
+                ViewBag.MessageCode = 1;
                 return PartialView("Success");
             }
             else
@@ -56,11 +56,17 @@ namespace TestExersize.Controllers
             return PartialView("Add",new Task());
         }
 
+        [HttpGet]
+        public ActionResult Index(string m_c)
+        {
+            return View(repository.GetUserOpenTasks(User.Identity.Name));
+        }
+
         public ActionResult Update(Task task)
         {
             if (ModelState.IsValid && repository.Update(task))
             {
-                ViewBag.Message = "Задача отредактирована!";
+                ViewBag.MessageCode = 2;
                 return PartialView("Success");
             }
             else
