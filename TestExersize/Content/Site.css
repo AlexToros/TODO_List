@@ -81,3 +81,6 @@ input[type="checkbox"].input-validation-error {
     right: 20px;
     animation-iteration-count: 1;
 }
+.modal-open{
+    margin:0px !important;
+}

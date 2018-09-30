@@ -8,7 +8,7 @@
             success: function (data) {
                 setTimeout(function () {
                     window.location.reload(true);
-                }, 100);
+                }, 0);
             }
         });
     };
@@ -31,19 +31,21 @@
             <tbody>
                 @foreach (var task in Model)
                 {
-                    <tr>
-                        <td class="col-lg-1">@Html.CheckBoxFor(t => task.IsDone, new { id = "status", onchange = "CloseTask(this," + task.Id + ")" })</td>
-                        <td class="col-lg-8">@task.Content</td>
-                        <td class="col-lg-3">
+                <tr>
+                    <td class="col-lg-1">@Html.CheckBoxFor(t => task.IsDone, new { id = "status", onchange = "CloseTask(this," + task.Id + ")" })</td>
+                    <td class="col-lg-8">@task.Content</td>
+                    <td class="col-lg-3">
+                        <div style="float:right">
                             @Html.ActionLink("Редактировать", "GetEditor",
-                                                            new { Id = task.Id },
-                                                            new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog" })
+                                new { Id = task.Id },
+                                new { @class = "btn btn-xs btn-primary", data_toggle = "modal", data_target = "#modDialog", style = "margin-bottom: 3px;" })
 
                             @Html.ActionLink("Удалить", "Remove",
-                                                            new { Id = task.Id },
-                                                            new { @class = "btn btn-xs btn-primary" })
-                        </td>
-                    </tr>
+                               new { Id = task.Id },
+                               new { @class = "btn btn-xs btn-danger", style = "margin-bottom: 3px;" })
+                        </div>
+                    </td>
+                </tr>
                 }
             </tbody>
         }
